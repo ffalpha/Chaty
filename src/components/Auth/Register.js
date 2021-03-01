@@ -21,13 +21,35 @@ export default class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   handleSubmit = (e) => {
-    e.preventDefault();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.passoword)
-      .then((Response) => {
-        console.log(Response);
-      });
+    if (this.isFromvalid) {
+      e.preventDefault();
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.passoword)
+        .then((Response) => {
+          console.log(Response);
+        });
+    }
+  };
+
+  isFromvalid = () => {
+    let errors = [];
+    let error;
+    if (this.isFormEmpty(this.state)) {
+      error = { message: 'Fill in Fileds' };
+    } else if (!this.isPasswordValid()) {
+    } else {
+      return true;
+    }
+  };
+
+  isFormEmpty = ({ username, email, passoword, passowordConfirmation }) => {
+    return (
+      !username.length ||
+      !email.length ||
+      !passoword.length ||
+      !passowordConfirmation.length
+    );
   };
   render() {
     const { email, username, password, passwordConfirmation } = this.state;
