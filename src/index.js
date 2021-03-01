@@ -1,12 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import App from "./components/App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
-import "semantic-ui-css/semantic.min.css";
+import App from './components/App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import 'semantic-ui-css/semantic.min.css';
 
 const Root = () => {
   return (
@@ -14,7 +14,7 @@ const Root = () => {
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />
-        <Route path="/regsiter" component={Register} />
+        <Route path="/register" component={Register} />
       </Switch>
     </Router>
   );
@@ -23,7 +23,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Root />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
