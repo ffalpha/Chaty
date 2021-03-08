@@ -16,12 +16,13 @@ export default class Register extends Component {
     email: '',
     passoword: '',
     passowordConfirmation: '',
+    errors: [],
   };
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
   handleSubmit = (e) => {
-    if (this.isFromvalid) {
+    if (this.isFromvalid()) {
       e.preventDefault();
       firebase
         .auth()
@@ -35,14 +36,29 @@ export default class Register extends Component {
   isFromvalid = () => {
     let errors = [];
     let error;
+
     if (this.isFormEmpty(this.state)) {
       error = { message: 'Fill in Fileds' };
-    } else if (!this.isPasswordValid()) {
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else if (!this.isPasswordValid(this.state)) {
+      error = { message: 'Password is invalid' };
+      this.setState({ errors: errors.concat(error) });
+      return false;
     } else {
       return true;
     }
   };
 
+  isPasswordValid = ({ passoword, passowordConfirmation }) => {
+    if (passoword.length < 6 || passowordConfirmation.length < 6) {
+      return false;
+    } else if (passoword !== passowordConfirmation) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   isFormEmpty = ({ username, email, passoword, passowordConfirmation }) => {
     return (
       !username.length ||
