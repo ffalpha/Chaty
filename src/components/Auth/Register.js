@@ -21,6 +21,9 @@ export default class Register extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  displayErrors = (errors) =>
+    errors.map((error, i) => <p key={i}>{error.message}</p>);
   handleSubmit = (e) => {
     if (this.isFromvalid()) {
       e.preventDefault();
@@ -68,7 +71,13 @@ export default class Register extends Component {
     );
   };
   render() {
-    const { email, username, password, passwordConfirmation } = this.state;
+    const {
+      email,
+      username,
+      password,
+      passwordConfirmation,
+      errors,
+    } = this.state;
     return (
       <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
@@ -126,6 +135,9 @@ export default class Register extends Component {
               </Button>
             </Segment>
           </Form>
+          {errors.length > 0 && (
+            <Message error>{this.displayErrors(errors)}</Message>
+          )}
           <Message>
             Already a user ?<Link to="login">Login</Link>
           </Message>
